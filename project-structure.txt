@@ -1,0 +1,11 @@
+.
+├── package-lock.json
+├── package.json
+├── project-structure.txt
+├── public
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
+└── server.js
+
+2 directories, 7 files

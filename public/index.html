@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Browser Terminal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      font-family: monospace;
+    }
+    #terminal {
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+  <script>
+    const term = new Terminal();
+    term.open(document.getElementById('terminal'));
+
+    const socket = new WebSocket(location.origin.replace(/^http/, 'ws'));
+
+    socket.onopen = () => {
+      term.write('Connected to shell\r\n');
+    };
+
+    socket.onmessage = e => {
+      term.write(e.data);
+    };
+
+    term.onData(data => {
+      socket.send(data);
+    });
+  </script>
+</body>
+</html>
